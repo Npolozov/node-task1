@@ -1,22 +1,23 @@
-const { Command } = require("commander");
-const program = new Command();
-program
-  .option("-a, --action <type>", "choose action")
-  .option("-i, --id <type>", "user id")
-  .option("-n, --name <type>", "user name")
-  .option("-e, --email <type>", "user email")
-  .option("-p, --phone <type>", "user phone");
+// const { Command } = require("commander");
+// const program = new Command();
+// program
+//   .option("-a, --action <type>", "choose action")
+//   .option("-i, --id <type>", "user id")
+//   .option("-n, --name <type>", "user name")
+//   .option("-e, --email <type>", "user email")
+//   .option("-p, --phone <type>", "user phone");
 
-program.parse(process.argv);
+// program.parse(process.argv);
 
-const argv = program.opts();
+// const argv = program.opts();
 
-// TODO: рефакторить
-function invokeAction({ action, id, name, email, phone }) {
+const contacts = require("./dp/contacts.json");
+
+const invokeAction = async ({ action, id, name, email, phone }) => {
   switch (action) {
     case "list":
-      // ...
-      break;
+      const allContacts = await contacts.listContacts();
+      return console.log(allContacts);
 
     case "get":
       // ... id
@@ -33,6 +34,6 @@ function invokeAction({ action, id, name, email, phone }) {
     default:
       console.warn("Unknown action type!");
   }
-}
+};
 
-invokeAction(argv);
+invokeAction({ action: "list" });
